@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
 from apps.register.forms import RegisterForm, UserForm
 
 
@@ -17,6 +16,7 @@ def register_view(request):
             form = form.save(commit=False)
             form.user = user
             form.save()
+            return redirect('register:index')
     else:
         user_form = UserForm()
         form = RegisterForm()
