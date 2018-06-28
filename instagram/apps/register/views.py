@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from apps.register.forms import RegisterForm, UserForm
-
+from django.contrib.auth import authenticate, login, logout
 
 def index(request):
-    return render(request, 'register/index.html')
+    return render(request, 'register/login_form.html')
 
 
 def register_view(request):
