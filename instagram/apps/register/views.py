@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from apps.register.forms import RegisterForm, UserForm
@@ -14,6 +14,8 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid() and user_form.is_valid:
                 user_form.save()
+                form = upf.save(commit=False)
+                form.user = user
                 form.save()
         return redirect('register:index')
     else:

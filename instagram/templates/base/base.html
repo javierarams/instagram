@@ -12,34 +12,29 @@
 
 <body>
 	<div class="container">
+		{% block Navbar %}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary clearfix">
+		  	<a class="navbar-brand" href="#">Instagram</a>
+		  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+		    	<span class="navbar-toggler-icon"></span>
+		  	</button>
 
-	{% block Navbar %}
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary clearfix">
-	  	<a class="navbar-brand" href="#">Instagram</a>
-	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-	    	<span class="navbar-toggler-icon"></span>
-	  	</button>
-
-	  	<div class="collapse navbar-collapse" id="navbarColor01">
-	    	<ul class="navbar-nav mr-auto">
-	      		<li class="nav-item active">
-	        		<a class="nav-link" href="#">Registrarse<span class="sr-only">(current)</span></a>
-	      		</li>
-	      		<li class="nav-item">
-	        		<a class="nav-link" href="#">Features</a>
-	      		</li>
-	    	</ul>
-	    	<form class="form-inline my-2 my-lg-0">
-	      		<input class="form-control mr-sm-2" type="text" placeholder="Search">
-	      		<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    		</form>
-  		</div>
-	</nav>
-
-	{% endblock %}
-
-	{% block content %} 
-	{% endblock %}
+		  	<div class="collapse navbar-collapse" id="navbarColor01">
+		    	<ul class="navbar-nav mr-auto">
+		      		<li class="nav-item active">
+		        		<a class="nav-link" href="#">Registrarse<span class="sr-only">(current)</span></a>
+		      		</li>
+		    	</ul>
+		    	<form class="form-inline my-2 my-lg-0">
+		      		<input class="form-control mr-sm-2" type="text" placeholder="User">
+		      		<input class="form-control mr-sm-2" type="text" placeholder="Password">
+		      		<button class="btn btn-secondary my-2 my-sm-0" type="submit">Login</button>
+	    		</form>
+	  		</div>
+		</nav>
+		{% endblock %}
+		{% block content %} 
+		{% endblock %}
 	</div>
 	<!-- Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
