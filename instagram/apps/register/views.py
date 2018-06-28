@@ -10,22 +10,14 @@ def index(request):
 
 def register_view(request):
     if request.method == 'POST':
-        print(1)
         user_form = UserForm(request.POST)
-        print(2)
-        form = RegisterForm(request.POST)
-        print(3)
+        form = RegisterForm(request.POST, request.FILES)
         if form.is_valid() and user_form.is_valid():
-            print(4)
-            user_form.save()
-            form = upf.save(commit=False)
+            user = user_form.save()
+            form = form.save(commit=False)
             form.user = user
             form.save()
-        print(5)
-        return redirect('register:index')
     else:
-        print('else')
         user_form = UserForm()
         form = RegisterForm()
-
     return render(request, 'register/register_form.html', {'user_form': user_form, 'form':form})

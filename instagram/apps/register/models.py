@@ -19,4 +19,4 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDERS)
     private = models.BooleanField()
     sugest = models.BooleanField()
-    pic = models.ImageField(upload_to='profilepics')
+    pic = models.ImageField(upload_to='profilepics', null=True)
