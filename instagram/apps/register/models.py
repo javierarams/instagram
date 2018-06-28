@@ -1,13 +1,21 @@
 from django.db import models
-# Create your models here.
-class User(models.Model):
-	nickname = models.CharField(max_length = 50, primary_key=True)
-	name = models.CharField(max_length = 50)
-	website = models.CharField(max_length = 140)
-	bio = models.CharField(max_length = 500)
-	phone = models.IntegerField()
-	email = models.EmailField(max_length = 140)
-	gender = models.CharField(max_length = 1)
-	private = models.BooleanField()
-	sugest = models.BooleanField()
 
+from django.contrib.auth.models import User
+
+
+class UserProfile(models.Model):
+        
+    GENDERS = (
+        ('M', 'M'),
+        ('F', 'F'),
+        ('X', 'X'),
+    )
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=50, unique=True)
+    website = models.CharField(max_length=140)
+    bio = models.CharField(max_length=500)
+    phone = models.IntegerField()
+    gender = models.CharField(max_length=1, choices=GENDERS)
+    private = models.BooleanField()
+    sugest = models.BooleanField()
