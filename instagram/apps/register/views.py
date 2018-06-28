@@ -1,5 +1,23 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+from apps.register.forms import RegisterForm, UserForm
+
+
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render(request, 'register/index.html')
+
+
+def register_view(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        form = RegisterForm(request.POST)
+        if form.is_valid() and user_form.is_valid:
+                user_form.save()
+                form.save()
+        return redirect('register:index')
+    else:
+        user_form = UserForm()
+        form = RegisterForm()
+
+    return render(request, 'register/register_form.html', {'user_form': user_form, 'form':form})
