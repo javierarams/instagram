@@ -4,4 +4,4 @@ from apps.register.models import User
 
 class Follower(models.Model):
 	#follower = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
-	followers = models.ManyToManyField(User)
+	followers = models.ManyToManyField(User, symmetrical=False)
