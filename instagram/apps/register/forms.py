@@ -8,15 +8,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        exclude = [
-            'is_superuser',
-            'is_staff',
-            'groups',
-            'user_permissions',
-            'date_joined',
-            'is_active',
-            'last_login'
-        ]
+        fields = ['username', 'email', 'password']
 
 
 class RegisterForm(forms.ModelForm):
