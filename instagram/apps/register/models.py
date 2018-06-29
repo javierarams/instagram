@@ -19,3 +19,6 @@ class UserProfile(models.Model):
     private = models.BooleanField()
     sugest = models.BooleanField()
     pic = models.ImageField(upload_to='profilepics', blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username

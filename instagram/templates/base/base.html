@@ -18,10 +18,18 @@
     			<div class="navbar-header">
       				<a class="navbar-brand" href="#">Instagram</a>
     			</div>
+                {% if user.is_authenticated %}
     			<ul class="nav navbar-nav">
-      				<li><a href="/register/new">Register</a></li>
-      				<li><a href="/register/login">Login</a></li>
-    			</ul>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Edit Profile</a></li>
+                    <li><a href="#">Change Password</a></li>
+                </ul>
+                { % else % }
+                <ul class="nav navbar-nav">
+                    <li><a href="/register/new">Register</a></li>
+                    <li><a href="/register/login">Login</a></li>
+                </ul>
+                {% endif %}
   			</div>
 		</nav>
 		{% endblock %}
