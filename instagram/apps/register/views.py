@@ -39,3 +39,7 @@ def profile_view(request, pk=None):
         user = request.user
     print(user.username)
     return render(request, 'register/profile.html', {'user': user})
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'register/logout.html')

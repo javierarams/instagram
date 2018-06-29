@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = '/register/profile/'
 LOGIN_URL = 'register/login/'
-
+LOGOUT_REDIRECT_URL = 'register/login/'
 # Application definition
 
 INSTALLED_APPS = [
