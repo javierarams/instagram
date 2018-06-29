@@ -16,7 +16,7 @@ def register_view(request):
             form = form.save(commit=False)
             form.user = user
             form.save()
-            return redirect('register:index')
+            return redirect('register:login')
     else:
         user_form = UserForm()
         form = RegisterForm()

@@ -27,7 +27,8 @@ SECRET_KEY = 'sbcmtd$=ig6u6gkgnpwb$p4z%j*&%1qvcljb$+6g#sl%)hhk2^'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_REDIRECT_URL = 'register/index/'
+LOGIN_URL = 'register/login/'
 
 # Application definition
 
