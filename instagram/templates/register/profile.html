@@ -4,13 +4,16 @@
 <title>Profile</title>
 {% endblock %}
 
-{% block body %}
+{% block content %}
 <div class="container">
-    <h1>Profile</h1>
-    <p>Nickname: {{ user }}</p>
+    <h2>{{ user.username }}</h2>
+    <img src="{{ user.userprofile.image.url }}" width="240">
     <p>First name: {{ user.first_name }}</p>
-    <p>Last name: {{ user.last_name }}</p>
     <p>Email: {{ user.email }}</p>
-    <p> {{ user.userprofile }} </p>
+    <p>Phone: {{ user.userprofile.phone }} </p>
+    <p>Biography: {{ user.userprofile.bio }} </p>
+    <p>Phone: {{ user.userprofile.phone }} </p>
+    <p>Website: {{ user.userprofile.website }} </p>
+    <p>Gender: {{ user.userprofile.gender }} </p>
 </div>
 {% endblock %}

@@ -6,9 +6,15 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
         
     GENDERS = (
-        ('M', 'M'),
-        ('F', 'F'),
+        ('M', 'Male'),
+        ('F', 'Female'),
         ('X', 'X'),
+    )
+    NOTIFICATIONS = (
+        ('P', 'Push'),
+        ('S', 'SMS'),
+        ('E', 'Email'),
+        ('N', 'Non')
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -18,7 +24,8 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDERS, default='X')
     private = models.BooleanField()
     sugest = models.BooleanField(default=True)
-    pic = models.ImageField(upload_to='profilepics', blank=True, null=True)
+    image = models.ImageField(upload_to='profilepics', blank=True, default='default.png')
+    notification = models.CharField(max_length=1, choices=NOTIFICATIONS, default='P')
 
     def __str__(self):
         return self.user.username
