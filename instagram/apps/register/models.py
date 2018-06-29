@@ -15,9 +15,9 @@ class UserProfile(models.Model):
     website = models.CharField(max_length=140)
     bio = models.CharField(max_length=500)
     phone = models.IntegerField()
-    gender = models.CharField(max_length=1, choices=GENDERS)
+    gender = models.CharField(max_length=1, choices=GENDERS, default='X')
     private = models.BooleanField()
-    sugest = models.BooleanField()
+    sugest = models.BooleanField(default=True)
     pic = models.ImageField(upload_to='profilepics', blank=True, null=True)
 
     def __str__(self):
