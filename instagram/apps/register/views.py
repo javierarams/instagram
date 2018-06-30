@@ -55,11 +55,11 @@ def follow_view(request):
 
 
 
-def follow_user(request, user_id):
+def follow_user(request):
     #user2 = User(request.POST)
     print(request.POST.getlist('followBtn'));
     #user2.userprofile.follows.add(user.userprofile) # user follows user2
-    return follow_view()
+    return follow_view(request)
 #user.userprofile.follows.all() # list of userprofiles of users that tim follows
 #user.userprofile.followed_by.all() # list of userprofiles of users that follow chris
 
