@@ -43,3 +43,22 @@ def profile_view(request, pk=None):
 def logout_view(request):
     logout(request)
     return render(request, 'register/logout.html')
+
+def follow_view(request):
+    users = User.objects.all()
+    return render(request, 'register/follow.html', {'users': users})
+
+#def find_friend(request):
+    #if request.user.is_authenticated:
+        #if User.objects.get(username=username).exists():
+    #friend = User.objects.get(username=username)
+
+
+
+def follow_user(request):
+    user2 = User(request.POST)
+    print("follow")
+    user2.userprofile.follows.add(user.userprofile) # user follows user2
+    return follow_view()
+#user.userprofile.follows.all() # list of userprofiles of users that tim follows
+#user.userprofile.followed_by.all() # list of userprofiles of users that follow chris

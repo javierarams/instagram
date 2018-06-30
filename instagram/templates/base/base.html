@@ -20,9 +20,9 @@
     			</div>
                 {% if user.is_authenticated %}
     			<ul class="nav navbar-nav">
-                    <li><a href="#">Profile</a></li>
+                    <li><a href="{% url 'register:profile' %}">Profile</a></li>
                     <li><a href="#">Followers</a></li>
-                    <li><a href="#">Search</a></li>
+                    <li><a href="{% url 'register:follow' %}">Search</a></li>
                     <li><a href="#">Requests</a></li>
                     <li><a href="#">Edit Profile</a></li>
                     <li><a href="#">Change Password</a></li>
