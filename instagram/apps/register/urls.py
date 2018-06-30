@@ -1,5 +1,5 @@
 from django.urls import path, include
-from apps.register.views import index, register_view, profile_view, logout_view, follow_view, follow_user
+from apps.register.views import index, register_view, profile_view, logout_view, follow_view, follow_user, friends_profile
 from django.contrib.auth import views as auth_views, logout
 
 app_name = 'register'
@@ -16,6 +16,7 @@ urlpatterns = [
         name='login',
     ),
     path('profile/', profile_view, name='profile'),
+    path('friends_profile/<userid>/', friends_profile, name='friends_profile'),
     path('logout/', logout_view, name='logout'),
     path('follow/', follow_view, name='follow'),
     path('follow_user/', follow_user, name='follow_user'),

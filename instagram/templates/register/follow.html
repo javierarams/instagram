@@ -9,6 +9,8 @@ Follow
 <form action="{% url 'register:follow_user' %}" method="POST">
     {% csrf_token %}
     <h4>{{ user.username }}</h4>
+    <!-- <a href="{% url 'register:friends_profile' user.id %}">{{ user.username }}</h4>  Hacer un link al perfil-->
+    <a href="{% url 'register:friends_profile' user.id %}">Profile</a>
     <button type="submit" name="followBtn" value="{{ user.id }}">Follow</button>
 
 </form>

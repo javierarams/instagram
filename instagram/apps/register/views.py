@@ -40,6 +40,11 @@ def profile_view(request, pk=None):
     print(user.username)
     return render(request, 'register/profile.html', {'user': user})
 
+def friends_profile(request, userid):
+    print(userid)
+    user = User.objects.get(id=userid)
+    return render(request, 'register/profile.html', {'user': user})
+
 def logout_view(request):
     logout(request)
     return render(request, 'register/logout.html')
@@ -57,9 +62,19 @@ def follow_view(request):
 
 def follow_user(request):
     #user2 = User(request.POST)
-    print(request.POST.getlist('followBtn'));
-    #user2.userprofile.follows.add(user.userprofile) # user follows user2
-    return follow_view(request)
+    user = request.user
+    print(request.POST.getlist('followBtn'))
+    userid = request.POST.getlist('followBtn')[0]
+    user2 = User.objects.get(id=userid)
+    print(user2.username)
+    user2.userprofile.follows.add(user.userprofile) # user follows user2
+    following = user.userprofile.follows.all()
+    followers = user.userprofile.followed_by.all()
+    print("llega")
+    users = User.objects.all()
+    for usuarios in following: #NO IMPRIME NADA
+        print(usuarios.username)
+    return render(request, 'register/follow.html', {'users': users})
 #user.userprofile.follows.all() # list of userprofiles of users that tim follows
 #user.userprofile.followed_by.all() # list of userprofiles of users that follow chris
 

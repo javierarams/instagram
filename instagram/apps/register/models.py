@@ -25,7 +25,8 @@ class UserProfile(models.Model):
     sugest = models.BooleanField(default=True)
     image = models.ImageField(upload_to='profilepics', blank=True, default='default.png')
     notification = models.CharField(max_length=1, choices=NOTIFICATIONS, default='P')
-    follows = models.ManyToManyField('UserProfile', related_name='followed_by')
+    follows = models.ManyToManyField('UserProfile', related_name='followed_by', default="", blank=True)
+    #requests = models.ManyToManyField('UserProfile')
 
     def __str__(self):
         return self.user.username
