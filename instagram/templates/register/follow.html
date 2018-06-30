@@ -4,8 +4,12 @@ Follow
 {% endblock %}
 
 {% block content %}
+
 {% for user in users %}
+<form action="{% url register.follow_user %}" method="POST">
+    {% csrf_token %}
     <h4>{{ user.username }}</h4>
-    <button id="{{ user.username }}">Follow</button>
+    <button id="{{ user.username }}" name="followBtn" value="{{ user.id }}">Follow</button>
+</form>
 {% endfor %}
 {% endblock%}
