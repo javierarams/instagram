@@ -40,9 +40,8 @@ def profile_view(request, pk=None):
     print(user.username)
     return render(request, 'register/profile.html', {'user': user})
 
-def friends_profile(request, userid):
-    print(userid)
-    user = User.objects.get(id=userid)
+def friends_profile(request, username):
+    user = User.objects.get(username=username)
     return render(request, 'register/profile.html', {'user': user})
 
 def logout_view(request):
