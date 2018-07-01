@@ -24,8 +24,8 @@
                     <li><a href="#">Followers</a></li>
                     <li><a href="{% url 'register:follow' %}">Search</a></li>
                     <li><a href="#">Requests</a></li>
-                    <li><a href="#">Edit Profile</a></li>
-                    <li><a href="#">Change Password</a></li>
+                    <li><a href="{% url 'register:edition' %}">Edit Profile</a></li>
+                    <li><a href="{% url 'register:change_password' %}">Change Password</a></li>
                     <li><a href="{% url 'register:logout' %}">Logout</a></li>
                 </ul>
                 {% else %}

@@ -3,9 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
-from apps.register.forms import RegisterForm, UserForm
-
+from apps.register.forms import RegisterForm, UserForm, EditRegisterForm, EditProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
 
 def index(request):
     return render(request, 'register/login_form.html')
@@ -27,6 +26,32 @@ def register_view(request):
         form = RegisterForm()
     return render(request, 'register/register_form.html', {'user_form': user_form, 'form':form})
 
+def edit_profile(request):
+    if request.method == "POST":
+        user_form = EditProfileForm(request.POST, instance=request.user)
+        form = EditRegisterForm(request.POST, instance=request.user)
+        if form.is_valid() and user_form.is_valid():
+            form.save()
+            user_form.save()
+            return redirect('register:profile')
+    else:
+        user_form = EditProfileForm(instance=request.user)
+        form = EditRegisterForm(instance=request.user)
+        args = {'user_form': user_form, 'form':form}
+        return render(request, 'register/edit_profile.html', args)
+
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('register:profile')
+
+    else:
+        form = PasswordChangeForm(user=request.user)
+    args = {'form': form}
+    return render(request, 'register/change_password.html', args)
 
 def profile_view(request, pk=None):
     if request.user.is_authenticated:
@@ -56,8 +81,6 @@ def follow_view(request):
     #if request.user.is_authenticated:
         #if User.objects.get(username=username).exists():
     #friend = User.objects.get(username=username)
-
-
 
 def follow_user(request):
     #user2 = User(request.POST)
