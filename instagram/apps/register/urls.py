@@ -21,5 +21,5 @@ urlpatterns = [
     path('follow/', follow_view, name='follow'),
     path('follow_user/', follow_user, name='follow_user'),
     path('edition/', edit_profile, name='edition'),
-    path('change-password/', change_password, name='change_password')
+    path('password/', change_password, name='change_password')
 ]

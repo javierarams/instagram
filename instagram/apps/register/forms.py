@@ -27,4 +27,4 @@ class EditRegisterForm(UserChangeForm):
 
     class Meta:
         model = UserProfile
-        exclude = ['user', 'password', 'follows']
+        exclude = ['user', 'follows']
