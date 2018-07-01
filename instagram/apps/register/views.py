@@ -74,7 +74,7 @@ def logout_view(request):
     return render(request, 'register/logout.html')
 
 def follow_view(request):
-    users = User.objects.all()
+    users = User.objects.exclude(id=request.user.id)
     return render(request, 'register/follow.html', {'users': users})
 
 #def find_friend(request):
