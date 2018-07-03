@@ -3,8 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from apps.register.forms import RegisterForm, UserForm, EditRegisterForm, EditProfileForm
 from django.contrib.auth.forms import PasswordChangeForm
+from django.views.decorators.csrf import csrf_exempt
+
+from apps.register.forms import RegisterForm, UserForm, EditRegisterForm, EditProfileForm
+from apps.register.models import UserProfile
+
 
 def index(request):
     return render(request, 'register/login_form.html')
@@ -67,7 +71,8 @@ def profile_view(request, pk=None):
 
 def friends_profile(request, username):
     user = User.objects.get(username=username)
-    return render(request, 'register/profile.html', {'user': user})
+    followed = request.user.userprofile.follows.filter(user=user).exists()
+    return render(request, 'register/profile.html', {'user': user, 'followed': followed})
 
 def logout_view(request):
     logout(request)
@@ -82,22 +87,11 @@ def follow_view(request):
         #if User.objects.get(username=username).exists():
     #friend = User.objects.get(username=username)
 
+@csrf_exempt
 def follow_user(request):
-    #user2 = User(request.POST)
+    # User logged in
     user = request.user
-    print(request.POST.getlist('followBtn'))
-    userid = request.POST.getlist('followBtn')[0]
-    user2 = User.objects.get(id=userid)
-    print(user2.username)
-    user2.userprofile.follows.add(user.userprofile) # user follows user2
-    following = user.userprofile.follows.all()
-    followers = user.userprofile.followed_by.all()
-    print("llega")
-    users = User.objects.all()
-    for usuarios in following: #NO IMPRIME NADA
-        print(usuarios.username)
-    return render(request, 'register/follow.html', {'users': users})
-#user.userprofile.follows.all() # list of userprofiles of users that tim follows
-#user.userprofile.followed_by.all() # list of userprofiles of users that follow chris
-
-
+    # Profile from user we want to follow
+    user_to_follow = UserProfile.objects.get(user_id=request.POST.get('user_id'))
+    user.userprofile.follows.add(user_to_follow)
+    return HttpResponse("ok")
