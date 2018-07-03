@@ -9,7 +9,9 @@ from apps.register.views import (index,
                                 edit_profile, 
                                 change_password,
                                 list_followers,
-                                list_followings)
+                                list_followings,
+                                list_follow_requests,
+                                accept_follow_request)
 from django.contrib.auth import views as auth_views, logout
 
 app_name = 'register'
@@ -34,4 +36,6 @@ urlpatterns = [
     path('password/', change_password, name='change_password'),
     path('followers/', list_followers, name='followers'),
     path('following/', list_followings, name='following'),
+    path('follow_requests/', list_follow_requests, name='follow_requests'),
+    path('accept_request/', accept_follow_request, name='accept_request'),
 ]

@@ -14,6 +14,13 @@
             <button id="follow-button" type="submit">Follow</button>
         {% endif %}
     </form>
+    <form id="accept-request-form" method="POST" action="/register/accept_request/">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.id }}"></input>
+        {% if follow_requested %}
+            <button id="accept-request-button" type="submit">Accept request</button>
+        {% endif %}
+    </form>
     <h2>{{ user.username }}</h2>
     <img src="{{ user.userprofile.image.url }}" width="240">
     <p>First name: {{ user.first_name }}</p>
@@ -27,8 +34,9 @@
 
 <script>
     $(document).ready(function(){
-        form = $("#follow-form")
-        $(form).click( function(e) {
+        follow_form = $("#follow-form")
+        accept_request_form = $("#accept-request-form")
+        $(follow_form).click( function(e) {
             event.preventDefault();
             $.ajax({
                 method: "POST",

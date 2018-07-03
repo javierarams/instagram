@@ -70,9 +70,11 @@ def profile_view(request, pk=None):
     return render(request, 'register/profile.html', {'user': user})
 
 def friends_profile(request, username):
+    print("entra en friends profile")
     user = User.objects.get(username=username)
     followed = request.user.userprofile.follows.filter(user=user).exists()
-    return render(request, 'register/profile.html', {'user': user, 'followed': followed})
+    follow_requested = request.user.userprofile.follow_requests.filter(user=user).exists()
+    return render(request, 'register/profile.html', {'user': user, 'followed': followed, 'follow_requested': follow_requested})
 
 def logout_view(request):
     logout(request)
@@ -93,9 +95,21 @@ def follow_user(request):
     user = request.user
     # Profile from user we want to follow
     user_to_follow = UserProfile.objects.get(user_id=request.POST.get('user_id'))
-    #if(user_to_follow.userprofile.private == True)
-    user.userprofile.follows.add(user_to_follow)
-    return render(request, 'register/profile.html', {'user': user_to_follow})
+    if(user_to_follow.private):
+        user = UserProfile.objects.get(user_id=user.id)
+        user_to_follow.follow_requests.add(user)
+        return HttpResponse('Request sent')
+    else:
+        user.userprofile.follows.add(user_to_follow)
+        return HttpResponse('Following')
+
+def accept_follow_request(request):
+    print("entra en accept_follow_request")
+    user = request.user
+    user_to_accept = UserProfile.objects.get(user_id=request.POST.get('user_id'))
+    user.userprofile.followed_by.add(user_to_accept)
+    user.userprofile.follow_requests.remove(user_to_accept)
+    return HttpResponse('Request accepted')
 
 def list_followers(request):
     user = request.user
@@ -106,3 +120,8 @@ def list_followings(request):
     user = request.user
     followings = user.userprofile.follows.all()
     return render(request, 'register/following.html', {'followings': followings})
+
+def list_follow_requests(request):
+    user = request.user
+    follow_requests = user.userprofile.follow_requests.all()
+    return render(request, 'register/follow_requests.html', {'follow_requests': follow_requests})

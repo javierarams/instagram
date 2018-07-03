@@ -4,8 +4,8 @@ Follow
 {% endblock %}
 
 {% block content %}
-<h1>Following</h1>
-{% for user in followings %}
+<h1>Follow requests</h1>
+{% for user in follow_requests %}
     {% csrf_token %}
     <h4><a href="{% url 'register:friends_profile' user.user %}">{{ user.user }}</a></h4>
 {% endfor %}
