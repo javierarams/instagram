@@ -23,7 +23,7 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDERS, default='X')
     private = models.BooleanField()
     sugest = models.BooleanField(default=True)
-    image = models.ImageField(upload_to='profilepics', blank=True, default='default.png')
+    image = models.ImageField(upload_to='profilepics', blank=True, default='profilepics/default.png')
     notification = models.CharField(max_length=1, choices=NOTIFICATIONS, default='P')
     follows = models.ManyToManyField('UserProfile', related_name='followed_by', default="", blank=True)
     #requests = models.ManyToManyField('UserProfile')

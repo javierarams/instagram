@@ -93,5 +93,16 @@ def follow_user(request):
     user = request.user
     # Profile from user we want to follow
     user_to_follow = UserProfile.objects.get(user_id=request.POST.get('user_id'))
+    #if(user_to_follow.userprofile.private == True)
     user.userprofile.follows.add(user_to_follow)
-    return HttpResponse("ok")
+    return render(request, 'register/profile.html', {'user': user_to_follow})
+
+def list_followers(request):
+    user = request.user
+    followers = user.userprofile.followed_by.all()
+    return render(request, 'register/followers.html', {'followers': followers})
+
+def list_followings(request):
+    user = request.user
+    followings = user.userprofile.follows.all()
+    return render(request, 'register/following.html', {'followings': followings})

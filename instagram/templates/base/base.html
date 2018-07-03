@@ -22,7 +22,8 @@
                 {% if user.is_authenticated %}
     			<ul class="nav navbar-nav">
                     <li><a href="{% url 'register:profile' %}">Profile</a></li>
-                    <li><a href="#">Followers</a></li>
+                    <li><a href="{% url 'register:followers' %}">Followers</a></li>
+                    <li><a href="{% url 'register:following' %}">Following</a></li>
                     <li><a href="{% url 'register:follow' %}">Search</a></li>
                     <li><a href="#">Requests</a></li>
                     <li><a href="{% url 'register:edition' %}">Edit Profile</a></li>
