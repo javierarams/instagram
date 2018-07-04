@@ -32,15 +32,15 @@ def register_view(request):
 
 def edit_profile(request):
     if request.method == "POST":
-        user_form = EditProfileForm(request.POST, instance=request.user)
-        form = EditRegisterForm(request.POST, instance=request.user.userprofile)
+        user_form = UserForm(request.POST, instance=request.user)
+        form = RegisterForm(request.POST, instance=request.user.userprofile)
         if form.is_valid() and user_form.is_valid():
             form.save()
             user_form.save()
             return redirect('register:profile')
     else:
-        user_form = EditProfileForm(instance=request.user)
-        form = EditRegisterForm(instance=request.user.userprofile)
+        user_form = UserForm(instance=request.user)
+        form = RegisterForm(instance=request.user.userprofile)
         args = {'user_form': user_form, 'form':form}
         return render(request, 'register/edit_profile.html', args)
 

@@ -16,15 +16,3 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ['user', 'follows', 'follow_requests']
-
-class EditProfileForm(UserChangeForm):
-
-    class Meta:
-        model = User
-        fields = ['email', 'first_name', 'last_name']
-
-class EditRegisterForm(UserChangeForm):
-
-    class Meta:
-        model = UserProfile
-        exclude = ['user', 'follows', 'follow_requests']
