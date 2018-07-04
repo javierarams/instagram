@@ -68,13 +68,14 @@ def profile_view(request, pk=None):
     else:
         user = request.user
     print(user.username)
-    return render(request, 'register/profile.html', {'user': user})
+    return render(request, 'register/profile.html', {'user': user, 'same_user': True})
 
 def friends_profile(request, username):
     user = User.objects.get(username=username)
+    same_user = str(user.username) is str(user.username)
     followed = request.user.userprofile.follows.filter(user=user).exists()
     follow_requested = request.user.userprofile.follow_requests.filter(user=user).exists()
-    return render(request, 'register/profile.html', {'user': user, 'followed': followed, 'follow_requested': follow_requested})
+    return render(request, 'register/profile.html', {'user': user, 'followed': followed, 'follow_requested': follow_requested, 'same_user': same_user})
 
 def logout_view(request):
     logout(request)

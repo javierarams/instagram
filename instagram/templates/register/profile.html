@@ -6,6 +6,7 @@
 
 {% block content %}
 <div class="container">
+    {% if not same_user %}
     <form id="follow-form" method="POST" action="/register/follow_user/">
         <input type="hidden" name="user_id" value="{{ user.id }}"></input>
         {% if followed %}
@@ -21,6 +22,7 @@
             <button id="accept-request-button" type="submit">Accept request</button>
         {% endif %}
     </form>
+    {% endif %}
     <h2>{{ user.username }}</h2>
     <img src="{{ user.userprofile.image.url }}" width="240">
     <p>First name: {{ user.first_name }}</p>
@@ -45,6 +47,18 @@
                 success: function (data) {
                     console.log(data)
                     $("#follow-button").text("Following")
+                }
+            });
+        });
+        $(accept_request_form).click( function(e) {
+            event.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "/register/follow_requests/",
+                data: form.serialize(),
+                success: function (data) {
+                    console.log(data)
+                    $("#accept-request-button").text("Accepted")
                 }
             });
         });
