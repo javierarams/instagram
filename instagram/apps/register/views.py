@@ -32,10 +32,11 @@ def register_view(request):
 
 def edit_profile(request):
     if request.method == "POST":
-        user_form = EditUserForm(request.POST, instance=request.user)
-        form = RegisterForm(request.POST, instance=request.user.userprofile)
+        user_form = EditUserForm(request.POST,instance=request.user)
+        form = RegisterForm(request.POST, request.FILES,instance=request.user.userprofile)
         if form.is_valid() and user_form.is_valid():
             form.save()
+            form.image = form.cleaned_data['image']
             user_form.save()
             update_session_auth_hash(request, request.user)
             return redirect('register:profile')

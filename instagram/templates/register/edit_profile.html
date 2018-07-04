@@ -2,10 +2,9 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST">
+    <form method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
         {% for field in user_form %}
-            {% ifnotequal label_tag 'password'%}
             <div>
                 {{ field.errors }}
                 {{ field.label_tag }}<br>
@@ -14,7 +13,6 @@
                     <p class="help">{{ field.help_text|safe }}</p>
                 {% endif %}
             </div>
-            {% endifnotequal %}
         {% endfor %}
         {% for field in form %}
             <div>
@@ -28,5 +26,6 @@
             </div>
         {% endfor %}
         <button type="submit">Accept changes</button>
+    </form>
 </div>
 {% endblock %}
