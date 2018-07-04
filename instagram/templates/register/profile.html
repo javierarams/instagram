@@ -41,7 +41,7 @@
             $.ajax({
                 method: "POST",
                 url: "/register/follow_user/",
-                data: form.serialize(),
+                data: follow_form.serialize(),
                 success: function (data) {
                     console.log(data)
                     $("#follow-button").text("Following")
