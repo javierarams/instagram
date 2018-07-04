@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.csrf import csrf_exempt
 
-from apps.register.forms import RegisterForm, UserForm
+from apps.register.forms import RegisterForm, UserForm, EditUserForm
 from apps.register.models import UserProfile
 
 
@@ -32,14 +32,15 @@ def register_view(request):
 
 def edit_profile(request):
     if request.method == "POST":
-        user_form = UserForm(request.POST, instance=request.user)
+        user_form = EditUserForm(request.POST, instance=request.user)
         form = RegisterForm(request.POST, instance=request.user.userprofile)
         if form.is_valid() and user_form.is_valid():
             form.save()
             user_form.save()
+            update_session_auth_hash(request, request.user)
             return redirect('register:profile')
     else:
-        user_form = UserForm(instance=request.user)
+        user_form = EditUserForm(instance=request.user)
         form = RegisterForm(instance=request.user.userprofile)
         args = {'user_form': user_form, 'form':form}
         return render(request, 'register/edit_profile.html', args)
@@ -70,7 +71,6 @@ def profile_view(request, pk=None):
     return render(request, 'register/profile.html', {'user': user})
 
 def friends_profile(request, username):
-    print("entra en friends profile")
     user = User.objects.get(username=username)
     followed = request.user.userprofile.follows.filter(user=user).exists()
     follow_requested = request.user.userprofile.follow_requests.filter(user=user).exists()
@@ -83,11 +83,6 @@ def logout_view(request):
 def follow_view(request):
     users = User.objects.exclude(id=request.user.id)
     return render(request, 'register/follow.html', {'users': users})
-
-#def find_friend(request):
-    #if request.user.is_authenticated:
-        #if User.objects.get(username=username).exists():
-    #friend = User.objects.get(username=username)
 
 @csrf_exempt
 def follow_user(request):
@@ -104,7 +99,6 @@ def follow_user(request):
         return HttpResponse('Following')
 
 def accept_follow_request(request):
-    print("entra en accept_follow_request")
     user = request.user
     user_to_accept = UserProfile.objects.get(user_id=request.POST.get('user_id'))
     user.userprofile.followed_by.add(user_to_accept)
