@@ -7,21 +7,25 @@
 {% block content %}
 <div class="container">
     {% if not same_user %}
-    <form id="follow-form" method="POST" action="/register/follow_user/">
-        <input type="hidden" name="user_id" value="{{ user.id }}"></input>
         {% if followed %}
-            <button id="follow-button" disabled>Following</button>
+            <form id="unfollow-form" method="POST" action="/register/unfollow/">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user.id }}"></input>
+                <button id="unfollow-button" type="submit">Unfollow</button>
+            </form>
         {% else %}
-            <button id="follow-button" type="submit">Follow</button>
+            <form id="follow-form" method="POST" action="/register/follow_user/">
+                <input type="hidden" name="user_id" value="{{ user.id }}"></input>
+                <button id="follow-button" type="submit">Follow</button>
+            </form>
         {% endif %}
-    </form>
-    <form id="accept-request-form" method="POST" action="/register/accept_request/">
-        {% csrf_token %}
-        <input type="hidden" name="user_id" value="{{ user.id }}"></input>
         {% if follow_requested %}
-            <button id="accept-request-button" type="submit">Accept request</button>
+            <form id="accept-request-form" method="POST" action="/register/accept_request/">
+            {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user.id }}"></input>
+                <button id="accept-request-button" type="submit">Accept request</button>
+            </form>
         {% endif %}
-    </form>
     {% endif %}
     <h2>{{ user.username }}</h2>
     <img src="{{ user.userprofile.image.url }}" width="240">
@@ -38,6 +42,7 @@
     $(document).ready(function(){
         follow_form = $("#follow-form")
         accept_request_form = $("#accept-request-form")
+        unfollow_form = $("#unfollow-form")
         $(follow_form).click( function(e) {
             event.preventDefault();
             $.ajax({
@@ -59,6 +64,18 @@
                 success: function (data) {
                     console.log(data)
                     $("#accept-request-button").text("Accepted")
+                }
+            });
+        });
+        $(unfollow_form).click( function(e) {
+            event.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "/register/unfollow/",
+                data: form.serialize(),
+                success: function (data) {
+                    console.log(data)
+                    $("#unfollow-button").text("Accepted")
                 }
             });
         });

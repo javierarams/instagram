@@ -72,7 +72,8 @@ def profile_view(request, pk=None):
 
 def friends_profile(request, username):
     user = User.objects.get(username=username)
-    same_user = str(user.username) is str(user.username)
+    same_user = str(user.username) is str(request.user.username)
+    print(same_user)
     followed = request.user.userprofile.follows.filter(user=user).exists()
     follow_requested = request.user.userprofile.follow_requests.filter(user=user).exists()
     return render(request, 'register/profile.html', {'user': user, 'followed': followed, 'follow_requested': follow_requested, 'same_user': same_user})
@@ -105,6 +106,12 @@ def accept_follow_request(request):
     user.userprofile.followed_by.add(user_to_accept)
     user.userprofile.follow_requests.remove(user_to_accept)
     return HttpResponse('Request accepted')
+
+def unfollow_user(request):
+    user=request.user
+    user_to_unfollow = UserProfile.objects.get(user_id=request.POST.get('user_id'))
+    user.userprofile.follows.remove(user_to_unfollow)
+    return HttpResponse('Unfollowed')
 
 def list_followers(request):
     user = request.user

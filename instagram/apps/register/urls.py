@@ -11,7 +11,8 @@ from apps.register.views import (index,
                                 list_followers,
                                 list_followings,
                                 list_follow_requests,
-                                accept_follow_request)
+                                accept_follow_request,
+                                unfollow_user)
 from django.contrib.auth import views as auth_views, logout
 
 app_name = 'register'
@@ -38,4 +39,5 @@ urlpatterns = [
     path('following/', list_followings, name='following'),
     path('follow_requests/', list_follow_requests, name='follow_requests'),
     path('accept_request/', accept_follow_request, name='accept_request'),
+    path('unfollow/', unfollow_user, name='unfollow'),
 ]
